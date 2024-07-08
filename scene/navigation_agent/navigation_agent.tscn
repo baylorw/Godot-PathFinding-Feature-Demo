@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cv3buc2tnx04e"]
+
+[ext_resource type="Script" path="res://scene/navigation_agent/navigation_agent.gd" id="1_it2w6"]
+[ext_resource type="Texture2D" uid="uid://dktrernbpktjp" path="res://asset/agent/Rufus.webp" id="2_5hf3k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4r2fe"]
+radius = 13.0
+
+[node name="NavigationAgent" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_it2w6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("2_5hf3k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4r2fe")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+target_desired_distance = 50.0
+path_postprocessing = 1
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
