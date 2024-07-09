@@ -20,9 +20,6 @@ layer_1/tile_data = PackedInt32Array()
 [node name="ManualPlayer" parent="." instance=ExtResource("3_typiu")]
 position = Vector2(201, 96)
 
-[node name="Seeker" parent="." instance=ExtResource("4_owy55")]
-position = Vector2(336, 478)
-
 [node name="Seekers" type="Node" parent="."]
 
 [node name="Seeker2" parent="Seekers" instance=ExtResource("4_owy55")]

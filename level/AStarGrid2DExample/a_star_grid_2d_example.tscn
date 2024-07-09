@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1amq5r75ivt0"]
+
+[ext_resource type="Script" path="res://level/AStarGrid2DExample/a_star_grid_2d_example.gd" id="1_0rjpy"]
+
+[node name="AStarGrid2DExample" type="Node2D"]
+script = ExtResource("1_0rjpy")

@@ -1,28 +1,62 @@
-[gd_scene load_steps=4 format=3 uid="uid://wru454qp24wy"]
+[gd_scene load_steps=6 format=3 uid="uid://wru454qp24wy"]
 
-[ext_resource type="Script" path="res://scene/navigation_agent/navigation_agent.gd" id="1_rivoi"]
+[ext_resource type="Script" path="res://scene/chasing_navigation_agent/chasing_navigation_agent.gd" id="1_0l8nv"]
 [ext_resource type="Texture2D" uid="uid://dktrernbpktjp" path="res://asset/agent/Rufus.webp" id="2_0msxy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_df0xw"]
+radius = 150.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sn4m8"]
+radius = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4r2fe"]
 radius = 13.0
 
-[node name="NavigationAgent" type="CharacterBody2D"]
+[node name="ChasingNavigationAgent" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 7
 motion_mode = 1
 wall_min_slide_angle = 0.0
-script = ExtResource("1_rivoi")
+script = ExtResource("1_0l8nv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.025, 0.025)
 texture = ExtResource("2_0msxy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_4r2fe")
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
 target_desired_distance = 40.0
 path_postprocessing = 1
+avoidance_enabled = true
+radius = 16.0
+max_speed = 300.0
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
+
+[node name="AbandonChaseBoundary" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AbandonChaseBoundary"]
+shape = SubResource("CircleShape2D_df0xw")
+debug_color = Color(1, 1, 0, 0.196078)
+
+[node name="AggroBoundary" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroBoundary"]
+shape = SubResource("CircleShape2D_sn4m8")
+debug_color = Color(1, 0, 0, 0.196078)
+
+[node name="AgentBoundary" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4r2fe")
+
+[node name="RepathTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="body_exited" from="AbandonChaseBoundary" to="." method="_on_abandon_chase_boundary_body_exited"]
+[connection signal="body_entered" from="AggroBoundary" to="." method="_on_aggro_boundary_body_entered"]
+[connection signal="timeout" from="RepathTimer" to="." method="_on_repath_timer_timeout"]
