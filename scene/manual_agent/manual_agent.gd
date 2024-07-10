@@ -32,4 +32,3 @@ func _physics_process(delta):
 		#velocity = Vector2.ZERO
 		#$AnimatedSprite2D.play("idle")
 	move_and_slide()
-

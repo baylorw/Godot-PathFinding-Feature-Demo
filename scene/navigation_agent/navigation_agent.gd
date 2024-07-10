@@ -57,5 +57,3 @@ func _physics_process(_delta):
 	#if !is_seeking:
 		#return
 	#pathfinder.target_position = desired_position
-
-

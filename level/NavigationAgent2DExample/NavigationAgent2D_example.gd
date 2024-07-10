@@ -7,4 +7,3 @@ func _unhandled_input(event):
 		var desired_position = get_global_mouse_position()
 		for agent in $Seekers.get_children():
 			agent.go_to(desired_position)
-

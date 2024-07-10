@@ -8,7 +8,7 @@ func _on_nav_2d_basic_example_pressed():
 	get_tree().change_scene_to_file("res://level/NavigationAgent2DExample/NavigationAgent2D_example.tscn")
 
 func _on_nav_2d_aggro_example_pressed():
-	get_tree().change_scene_to_file("res://scene/chasing_navigation_agent/chasing_navigation_agent.tscn")
+	get_tree().change_scene_to_file("res://level/ChaseWithNavigationAgent2DExample/chase_with_NavigationAgent2D_example.tscn")
 
-func _on_a_star_example_pressed():
+func _on_a_star_grid_example_pressed():
 	get_tree().change_scene_to_file("res://level/AStarGrid2DExample/a_star_grid_2d_example.tscn")

@@ -28,61 +28,117 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+[node name="NavMeshVBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/NavMeshVBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/NavMeshVBoxContainer/MarginContainer"]
 layout_mode = 2
 bbcode_enabled = true
 text = "[center][b][u][color=\"green\"]NavigationAgent2D[/color][/u][/b][/center]"
 fit_content = true
 autowrap_mode = 0
 
-[node name="Nav2DBasicExample" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="Nav2DBasicExample" type="Button" parent="PanelContainer/HBoxContainer/NavMeshVBoxContainer"]
 layout_mode = 2
 text = "Move To Mouse"
 
-[node name="Nav2DAggroExample" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="Nav2DAggroExample" type="Button" parent="PanelContainer/HBoxContainer/NavMeshVBoxContainer"]
 layout_mode = 2
 text = "Aggro Example"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+[node name="AStarGridVBoxContainer2" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer2/MarginContainer2"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/MarginContainer2"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[center][b][u][color=\"green\"]AStar2DGrid
+text = "[center][b][u][color=\"green\"]AStarGrid2D
 [/color][/u][/b][/center]"
 fit_content = true
 autowrap_mode = 0
 
-[node name="AStarExample" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+[node name="AStarGridExample" type="Button" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2"]
 layout_mode = 2
 text = "Move To Mouse"
 
-[node name="AStarTerrainCostExample" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+[node name="AStarGridRuntimeModExample" type="Button" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2"]
+layout_mode = 2
+text = "Modifying Grid"
+
+[node name="AStarGridTerrainCostExample" type="Button" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2"]
 layout_mode = 2
 text = "Terrain Cost"
 
-[node name="AStarRuntimeModExample" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+[node name="AStarVBoxContainer3" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
-text = "Modifying NavMesh"
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/Nav2DBasicExample" to="." method="_on_nav_2d_basic_example_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/Nav2DAggroExample" to="." method="_on_nav_2d_aggro_example_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer2/AStarExample" to="." method="_on_a_star_example_pressed"]
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3/MarginContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][b][u][color=\"green\"]AStar2D
+[/color][/u][/b][/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="AStarExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
+layout_mode = 2
+text = "Move To Mouse"
+
+[node name="AStarRuntimeModExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
+layout_mode = 2
+text = "Modifying Grid"
+
+[node name="AStarTerrainCostExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
+layout_mode = 2
+text = "Terrain Cost"
+
+[node name="CustomVBoxContainer4" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4/MarginContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][b][u][color=\"green\"]Custom
+[/color][/u][/b][/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="TileMapPathfinderExample" type="Button" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4"]
+layout_mode = 2
+text = "TileMapPathfinder"
+
+[node name="FloydExample" type="Button" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4"]
+layout_mode = 2
+text = "Floyd"
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/NavMeshVBoxContainer/Nav2DBasicExample" to="." method="_on_nav_2d_basic_example_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/NavMeshVBoxContainer/Nav2DAggroExample" to="." method="_on_nav_2d_aggro_example_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridExample" to="." method="_on_a_star_grid_example_pressed"]
