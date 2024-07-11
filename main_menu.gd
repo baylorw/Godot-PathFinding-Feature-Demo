@@ -12,3 +12,6 @@ func _on_nav_2d_aggro_example_pressed():
 
 func _on_a_star_grid_example_pressed():
 	get_tree().change_scene_to_file("res://level/AStarGrid2DExample/a_star_grid_2d_example.tscn")
+
+func _on_a_star_grid_terrain_cost_example_pressed() -> void:
+	get_tree().change_scene_to_file("res://level/AStarGrid2DTerrainCostExample/a_star_grid_2d_terrain_cost_example.tscn")

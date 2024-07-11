@@ -4,7 +4,8 @@ const DEFAULT_MASS := 5.0
 const DEFAULT_MAX_SPEED := 400.0
 const DEFAULT_SLOW_RADIUS := 200.0
 
-static func follow(
+#static func follow(
+func follow(
 	velocity: Vector2,
 	global_position: Vector2,
 	target_position: Vector2,
@@ -15,7 +16,8 @@ static func follow(
 	var steering := (desired_velocity - velocity) / mass
 	return velocity + steering
 
-static func arrive_to(
+#static func arrive_to(
+func arrive_to(
 	velocity: Vector2,
 	global_position: Vector2,
 	target_position: Vector2,
