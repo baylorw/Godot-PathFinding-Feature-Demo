@@ -15,3 +15,6 @@ func _on_a_star_grid_example_pressed():
 
 func _on_a_star_grid_terrain_cost_example_pressed() -> void:
 	get_tree().change_scene_to_file("res://level/AStarGrid2DTerrainCostExample/a_star_grid_2d_terrain_cost_example.tscn")
+
+func _on_a_star_grid_runtime_mod_example_pressed() -> void:
+	get_tree().change_scene_to_file("res://level/AStarGrid2DRunTimeModificationExample/a_star_grid_2d_run_time_modification_example.tscn")

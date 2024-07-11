@@ -6,19 +6,18 @@ extends Node2D
 
 var should_show_path := true
 
-var astar_grid : AStarWeightedGrid2D
+var astar_grid = AStarGrid2D.new()
 
 func _ready():
-	astar_grid = AStarWeightedGrid2D.new(terrain_tilemap)
 	build_astar_grid()
-	init_ui()
-
-func init_ui():
+	
+	#--- Show the control values
 	%ShowPathCheckButton.button_pressed = should_show_path
+	%JumpCheckButton.button_pressed = astar_grid.jumping_enabled
 	%COptionButton.selected = astar_grid.default_compute_heuristic
 	%HOptionButton.selected = astar_grid.default_estimate_heuristic
 	%DiagonalOptionButton.selected = astar_grid.diagonal_mode
-
+	
 func build_astar_grid():
 	#var tile_size = terrain_tilemap.tile_set.tile_size
 	astar_grid.cell_size = terrain_tilemap.tile_set.tile_size
@@ -28,7 +27,7 @@ func build_astar_grid():
 	#		  012
 	#		0 X.	You can't get from (0,1) to (1,0) because you can't 
 	#		1 .X	squeeze through the Xs.
-	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	
 	#--- What fucking idiot named this a heuristic?
 	#--- Euclidean is the default so don't technically have to set this. Doing so for documentation.
@@ -38,7 +37,7 @@ func build_astar_grid():
 	#--- This is just a performance optimization (it does tile compression/culling).
 	#--- Has NOTHING to do with jumping.
 	#--- If you use this you lose link weights, revert to uniform cost :(.
-	astar_grid.jumping_enabled = false
+	astar_grid.jumping_enabled = true
 
 	#--- MUST call this before marking blockers
 	astar_grid.update()
@@ -53,7 +52,7 @@ func build_astar_grid():
 		var oc = nav_shape.get_outline_count()
 		if oc == 0:
 			astar_grid.set_point_solid(terrain_position)
-	
+
 	#--- Remove spots where they can't walk because something is already there.
 	var blocker_positions : Array[Vector2i] = blocker_tilemap.get_used_cells()
 	for blocker_position in blocker_positions:
@@ -68,17 +67,32 @@ func _unhandled_input(event: InputEvent):
 		%Camera2D.zoom -= Vector2(0.1, 0.1)
 	elif event.is_action_pressed("left_click"):
 		start_pathing()
+	elif event.is_action_pressed("right_click"):
+		plant_tree()
+	elif event.is_action_pressed("middle_click"):
+		remove_blocker()
 
+func plant_tree():
+	var coord_local = get_local_mouse_position()
+	var coord_map = blocker_tilemap.local_to_map(coord_local)
+	#--- sheet 5 tile (0,0) is a tree
+	blocker_tilemap.set_cell(coord_map, 5, Vector2i(0, 0))
+	astar_grid.set_point_solid(coord_map)
+
+func remove_blocker():
+	var coord_local = get_local_mouse_position()
+	var coord_map = blocker_tilemap.local_to_map(coord_local)
+	#--- sheet 5 tile (0,0) is a tree
+	blocker_tilemap.erase_cell(coord_map)
+	astar_grid.set_point_solid(coord_map, false)
+	
 func start_pathing():
 	var from = agent.position
 	var to   = get_global_mouse_position()
-	#print("You clicked on global=" + str(to) + " map=" + str(coordinate_global_to_map(to)))
+	print("You clicked on global=" + str(to) + " map=" + str(coordinate_global_to_map(to)))
 
-	var map_from = coordinate_global_to_map(from)
-	var map_to   = coordinate_global_to_map(to)
-	#print("Want a path from " + str(from) + " to " + str(to))
-	print("Want a path from " + str(map_from) + " to " + str(map_to))
-	var path_in_map_coords = astar_grid.get_id_path(map_from, map_to)
+	print("Want a path from " + str(from) + " to " + str(to))
+	var path_in_map_coords = astar_grid.get_id_path(coordinate_global_to_map(from), coordinate_global_to_map(to))
 	#print("map path=" + str(path_in_map_coords))
 	#--- First node (path[0]) is current position, don't need to move to that so get rid of it.
 	var path_in_global_coords = coords_map_to_global(path_in_map_coords)
@@ -113,6 +127,9 @@ func coordinate_map_to_global(coordinate_global : Vector2i) -> Vector2i:
 func _on_show_path_check_button_toggled(toggled_on: bool) -> void:
 	should_show_path = toggled_on
 	%ManualDrawLayer.clear()
+
+func _on_jump_check_button_toggled(toggled_on: bool) -> void:
+	astar_grid.jumping_enabled = toggled_on
 
 func _on_c_option_button_item_selected(index: int) -> void:
 	astar_grid.default_compute_heuristic = index

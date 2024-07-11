@@ -127,18 +127,6 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 
-[node name="Jump" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/GridContainer"]
-layout_mode = 2
-text = "Compress"
-horizontal_alignment = 1
-
-[node name="JumpCheckButton" type="CheckButton" parent="CanvasLayer/MarginContainer/PanelContainer/GridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-toggle_mode = false
-
 [node name="C" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/GridContainer"]
 layout_mode = 2
 text = "C"
@@ -219,7 +207,6 @@ theme_override_font_sizes/font_size = 18
 text = "Mousewheel to zoom"
 
 [connection signal="toggled" from="CanvasLayer/MarginContainer/PanelContainer/GridContainer/ShowPathCheckButton" to="." method="_on_show_path_check_button_toggled"]
-[connection signal="toggled" from="CanvasLayer/MarginContainer/PanelContainer/GridContainer/JumpCheckButton" to="." method="_on_jump_check_button_toggled"]
 [connection signal="item_selected" from="CanvasLayer/MarginContainer/PanelContainer/GridContainer/COptionButton" to="." method="_on_c_option_button_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/MarginContainer/PanelContainer/GridContainer/HOptionButton" to="." method="_on_h_option_button_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/MarginContainer/PanelContainer/GridContainer/DiagonalOptionButton" to="." method="_on_diagonal_option_button_item_selected"]

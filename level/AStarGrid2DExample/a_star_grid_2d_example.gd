@@ -42,6 +42,17 @@ func build_astar_grid():
 	#--- MUST call this before marking blockers
 	astar_grid.update()
 	
+	#--- Remove spots where there is no nav layer.
+	# ASSUMPTION: User doesn't want to assume all terrain is navigable and specifies that using
+	#			  the built-in nav layer.
+	var terrain_positions : Array[Vector2i] = terrain_tilemap.get_used_cells()
+	for terrain_position in terrain_positions:
+		var tile_data = terrain_tilemap.get_cell_tile_data(terrain_position)
+		var nav_shape : NavigationPolygon = tile_data.get_navigation_polygon(0)
+		var oc = nav_shape.get_outline_count()
+		if oc == 0:
+			astar_grid.set_point_solid(terrain_position)
+
 	#--- Remove spots where they can't walk because something is already there.
 	var blocker_positions : Array[Vector2i] = blocker_tilemap.get_used_cells()
 	for blocker_position in blocker_positions:

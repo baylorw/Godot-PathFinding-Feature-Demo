@@ -142,4 +142,5 @@ text = "Floyd"
 [connection signal="pressed" from="PanelContainer/HBoxContainer/NavMeshVBoxContainer/Nav2DBasicExample" to="." method="_on_nav_2d_basic_example_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/NavMeshVBoxContainer/Nav2DAggroExample" to="." method="_on_nav_2d_aggro_example_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridExample" to="." method="_on_a_star_grid_example_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridRuntimeModExample" to="." method="_on_a_star_grid_runtime_mod_example_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridTerrainCostExample" to="." method="_on_a_star_grid_terrain_cost_example_pressed"]
