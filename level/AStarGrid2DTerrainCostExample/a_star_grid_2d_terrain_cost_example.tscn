@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://level/AStarGrid2DTerrainCostExample/a_star_grid_2d_terrain_cost_example.gd" id="1_q4cvb"]
 [ext_resource type="Script" path="res://level/AStarGrid2DExample/camera_2d.gd" id="2_twqmj"]
 [ext_resource type="TileSet" uid="uid://d8gh12vwk3n7" path="res://asset/tilemap/roads_and_terrain.tres" id="3_al7iw"]
-[ext_resource type="Script" path="res://level/AStarGrid2DExample/manual_draw_layer.gd" id="4_c7p7x"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/manual_multidraw_layer.gd" id="4_c7p7x"]
 [ext_resource type="PackedScene" uid="uid://doi7efayw5psr" path="res://scene/path_follower/path_follower.tscn" id="6_3xekh"]
 
 [node name="AStarGrid2DExample" type="Node2D"]

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://level/AStarGrid2DExample/camera_2d.gd" id="2_eeglc"]
 [ext_resource type="PackedScene" uid="uid://doi7efayw5psr" path="res://scene/path_follower/path_follower.tscn" id="3_ikvxo"]
 [ext_resource type="PackedScene" uid="uid://bs3dq07nk5amq" path="res://scene/manual_agent/manual_agent.tscn" id="4_lhu0v"]
-[ext_resource type="Script" path="res://level/AStarGrid2DExample/manual_draw_layer.gd" id="5_t517d"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/manual_multidraw_layer.gd" id="5_t517d"]
 
 [node name="AStarGrid2DExample" type="Node2D"]
 y_sort_enabled = true

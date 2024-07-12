@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name PathFollower extends CharacterBody2D
 
 # TODO: The export values don't seem to do anything. Investigate.
 #@export var acceleration := 9000.0
@@ -39,7 +39,7 @@ func _physics_process(_delta):
 			is_seeking = false
 		else:
 			desired_position = path.pop_front()
-			#look_at(desired_position)
+			look_at(desired_position)
 			#--- Is this the last segment?
 			if path.is_empty():
 				current_slow_radius = endpoint_slow_radius

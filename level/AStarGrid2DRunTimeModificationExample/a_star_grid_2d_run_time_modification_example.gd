@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var terrain_tilemap : TileMapLayer = %GroundTileMapLayer
 @onready var blocker_tilemap : TileMapLayer = %BlockersTileMapLayer
-@onready var agent = %PathFollower
+@onready var agent : PathFollower = %PathFollower
 
 var should_show_path := true
 
@@ -82,16 +82,15 @@ func plant_tree():
 func remove_blocker():
 	var coord_local = get_local_mouse_position()
 	var coord_map = blocker_tilemap.local_to_map(coord_local)
-	#--- sheet 5 tile (0,0) is a tree
 	blocker_tilemap.erase_cell(coord_map)
 	astar_grid.set_point_solid(coord_map, false)
 	
 func start_pathing():
 	var from = agent.position
 	var to   = get_global_mouse_position()
-	print("You clicked on global=" + str(to) + " map=" + str(coordinate_global_to_map(to)))
+	#print("You clicked on global=" + str(to) + " map=" + str(coordinate_global_to_map(to)))
 
-	print("Want a path from " + str(from) + " to " + str(to))
+	#print("Want a path from " + str(from) + " to " + str(to))
 	var path_in_map_coords = astar_grid.get_id_path(coordinate_global_to_map(from), coordinate_global_to_map(to))
 	#print("map path=" + str(path_in_map_coords))
 	#--- First node (path[0]) is current position, don't need to move to that so get rid of it.

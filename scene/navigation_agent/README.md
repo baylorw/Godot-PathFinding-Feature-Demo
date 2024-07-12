@@ -12,4 +12,3 @@ Navigation agents get stuck on edges a LOT. Options:
 3. CharacterBody2D.motion_mode=Floating
 4. CharacterBody2D.wall_min_slide_angle=0
 You might need all of them plus making sure your agent is 1 tile wide.
-

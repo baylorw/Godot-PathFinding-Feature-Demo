@@ -28,7 +28,7 @@ func arrive_to(
 	var distance_to_target := global_position.distance_to(target_position)
 	var desired_velocity := (target_position - global_position).normalized() * max_speed
 	if distance_to_target < slow_radius:
-		# TODO: Use decelleration here, not a hard code
+		# TODO: Use deceleration here, not a hard code
 		desired_velocity *= ((distance_to_target / slow_radius) * 0.75) + 0.02
 	var steering := (desired_velocity - velocity) / mass
 	return velocity + steering

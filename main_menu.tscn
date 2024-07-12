@@ -83,6 +83,10 @@ text = "Modifying Grid"
 layout_mode = 2
 text = "Terrain Cost"
 
+[node name="MazingTDExample" type="Button" parent="PanelContainer/HBoxContainer/AStarGridVBoxContainer2"]
+layout_mode = 2
+text = "Mazing TD"
+
 [node name="AStarVBoxContainer3" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 
@@ -103,14 +107,17 @@ autowrap_mode = 0
 
 [node name="AStarExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
 layout_mode = 2
+disabled = true
 text = "Move To Mouse"
 
 [node name="AStarRuntimeModExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
 layout_mode = 2
+disabled = true
 text = "Modifying Grid"
 
 [node name="AStarTerrainCostExample" type="Button" parent="PanelContainer/HBoxContainer/AStarVBoxContainer3"]
 layout_mode = 2
+disabled = true
 text = "Terrain Cost"
 
 [node name="CustomVBoxContainer4" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
@@ -133,10 +140,12 @@ autowrap_mode = 0
 
 [node name="TileMapPathfinderExample" type="Button" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4"]
 layout_mode = 2
+disabled = true
 text = "TileMapPathfinder"
 
 [node name="FloydExample" type="Button" parent="PanelContainer/HBoxContainer/CustomVBoxContainer4"]
 layout_mode = 2
+disabled = true
 text = "Floyd"
 
 [connection signal="pressed" from="PanelContainer/HBoxContainer/NavMeshVBoxContainer/Nav2DBasicExample" to="." method="_on_nav_2d_basic_example_pressed"]
@@ -144,3 +153,4 @@ text = "Floyd"
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridExample" to="." method="_on_a_star_grid_example_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridRuntimeModExample" to="." method="_on_a_star_grid_runtime_mod_example_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/AStarGridTerrainCostExample" to="." method="_on_a_star_grid_terrain_cost_example_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/AStarGridVBoxContainer2/MazingTDExample" to="." method="_on_mazing_td_example_pressed"]

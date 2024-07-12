@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://level/AStarGrid2DRunTimeModificationExample/a_star_grid_2d_run_time_modification_example.gd" id="1_mufx8"]
 [ext_resource type="Script" path="res://level/AStarGrid2DExample/camera_2d.gd" id="2_feexf"]
 [ext_resource type="TileSet" uid="uid://d8gh12vwk3n7" path="res://asset/tilemap/roads_and_terrain.tres" id="3_x7bcm"]
-[ext_resource type="Script" path="res://level/AStarGrid2DExample/manual_draw_layer.gd" id="4_2f4id"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/manual_multidraw_layer.gd" id="4_2f4id"]
 [ext_resource type="PackedScene" uid="uid://bs3dq07nk5amq" path="res://scene/manual_agent/manual_agent.tscn" id="5_5kj2t"]
 [ext_resource type="PackedScene" uid="uid://doi7efayw5psr" path="res://scene/path_follower/path_follower.tscn" id="6_vt8hb"]
 
@@ -34,7 +34,6 @@ tile_map_data = PackedByteArray("AAD///7/BwAAAAAAAAD/////BwAAAAAAAAD//wAABwAAAAA
 tile_set = ExtResource("3_x7bcm")
 
 [node name="PickupsTileMapLayer" type="TileMapLayer" parent="TileMaps"]
-visible = false
 position = Vector2(0, 2)
 tile_set = ExtResource("3_x7bcm")
 
