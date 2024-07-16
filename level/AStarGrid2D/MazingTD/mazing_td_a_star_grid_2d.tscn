@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://dfi3up6k11vbe"]
+[gd_scene load_steps=10 format=4 uid="uid://dfi3up6k11vbe"]
 
 [ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/mazing_td_a_star_grid_2d.gd" id="1_fidqg"]
 [ext_resource type="TileSet" uid="uid://d8gh12vwk3n7" path="res://asset/tilemap/roads_and_terrain.tres" id="1_geped"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://doi7efayw5psr" path="res://scene/path_follower/path_follower.tscn" id="3_eex6v"]
 [ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/manual_multidraw_layer.gd" id="4_l6ncg"]
 [ext_resource type="Script" path="res://level/AStarGrid2D/MazingTD/walls_tile_map.gd" id="4_ron0r"]
+[ext_resource type="PackedScene" uid="uid://bvpqeqrft7ixh" path="res://scene/path_line/path_line.tscn" id="7_5stke"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7v6cv"]
 size = Vector2(32, 32)
@@ -111,10 +112,17 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Left to create. Right to delete."
 
+[node name="Paths" type="Node2D" parent="."]
+
+[node name="Group1Line2D" parent="Paths" instance=ExtResource("7_5stke")]
+unique_name_in_owner = true
+
+[node name="Group2Line2D" parent="Paths" instance=ExtResource("7_5stke")]
+unique_name_in_owner = true
+
 [node name="PathFollowerPrototype" parent="." instance=ExtResource("3_eex6v")]
 unique_name_in_owner = true
 position = Vector2(112, -18)
-safe_margin = 2.0
 max_speed = 50.0
 endpoint_slow_radius = 50.0
 

@@ -96,7 +96,7 @@ func repath_creeps():
 	show_default_paths()
 
 	var creeps = get_tree().get_nodes_in_group("creeps")
-	print("creeps size=" + str(creeps.size()))
+	#print("creeps size=" + str(creeps.size()))
 	for creep in creeps:
 		var creep_position_map = coordinate_global_to_map(creep.position)
 		var path_in_map_coords = astar_grid.get_id_path(creep_position_map, goal_coord_map)
@@ -121,8 +121,11 @@ func calculate_default_paths():
 
 func show_default_paths():
 	%ManualDrawLayer.clear()
-	%ManualDrawLayer.render_polyline(group_1_path_global.duplicate())
-	%ManualDrawLayer2.render_polyline(group_2_path_global.duplicate())
+	#%ManualDrawLayer.render_polyline(group_1_path_global.duplicate())
+	#%ManualDrawLayer2.render_polyline(group_2_path_global.duplicate())
+	
+	%Group1Line2D.points = PackedVector2Array(group_1_path_global)
+	%Group2Line2D.points = PackedVector2Array(group_2_path_global)
 
 func spawn_creeps():
 	if group_1_path_global.is_empty() or group_2_path_global.is_empty():
@@ -139,7 +142,7 @@ func spawn_creep_at(start_position_global : Vector2, path : Array[Vector2]):
 	new_enemy.add_to_group("creeps")
 	new_enemy.position = start_position_global
 	%Creeps.add_child(new_enemy, true)
-	print("new_enemy.position=" + str(new_enemy.position) + " name=" + new_enemy.name)
+	#print("new_enemy.position=" + str(new_enemy.position) + " name=" + new_enemy.name)
 
 	if path.is_empty():
 		print("!!! NO PATH FOUND !!! from=" + str(start_position_global) + " to=" + str(goal_coord_global))
