@@ -5,13 +5,30 @@
 extends Node2D
 
 var polyline : Array[Vector2]
+var should_draw_step_numbers := false
+var should_draw_path := false
+
+var default_font := ThemeDB.fallback_font
+var default_font_size := ThemeDB.fallback_font_size
+
+func _ready():
+	default_font = ThemeDB.fallback_font
+	default_font_size = ThemeDB.fallback_font_size
 
 func clear():
 	polyline = []
+	should_draw_path = false
+	should_draw_step_numbers = false
 	queue_redraw()
 	
 func render_polyline(polyline):
 	self.polyline = polyline
+	should_draw_path = true
+	queue_redraw()
+
+func show_step_number(path : Array[Vector2]):
+	self.polyline = path
+	should_draw_step_numbers = true
 	queue_redraw()
 	
 func _draw():
@@ -30,10 +47,19 @@ func _draw():
 	
 	#--- Can draw circles on each point
 	var last_point = polyline[0]
-	draw_circle(last_point, 6, Color.GOLD, true)
+	if should_draw_path:
+		draw_circle(last_point, 6, Color.GOLD, true)
+	if should_draw_step_numbers:
+		draw_string(default_font, last_point, "1")
 	for index in range(1, len(polyline)):
 		var current_point = polyline[index]
-		#print("drawing from=" + str(last_point) + " to " + str(current_point))
-		draw_line(last_point, current_point, Color.MAROON, 3, true)
-		draw_circle(current_point, 6, Color.GOLD, true)
+
+		if should_draw_path:
+			#print("drawing from=" + str(last_point) + " to " + str(current_point))
+			draw_line(last_point, current_point, Color.MAROON, 3, true)
+			draw_circle(current_point, 6, Color.GOLD, true)
+		if should_draw_step_numbers:
+			var centered_coord = current_point - Vector2(5,-5)
+			draw_string(default_font, centered_coord, str(index))
+		
 		last_point = current_point

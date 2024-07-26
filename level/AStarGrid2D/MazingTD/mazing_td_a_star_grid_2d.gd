@@ -40,7 +40,8 @@ func _ready():
 func build_astar_grid():
 	astar_grid.cell_size = terrain_tilemap.tile_set.tile_size
 	astar_grid.region = terrain_tilemap.get_used_rect()
-	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	#astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
 	astar_grid.default_compute_heuristic  = AStarGrid2D.HEURISTIC_EUCLIDEAN
 	astar_grid.default_estimate_heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
 	astar_grid.update()
@@ -122,6 +123,7 @@ func calculate_default_paths():
 func show_default_paths():
 	%ManualDrawLayer.clear()
 	#%ManualDrawLayer.render_polyline(group_1_path_global.duplicate())
+	%ManualDrawLayer.show_step_number(group_1_path_global.duplicate())
 	#%ManualDrawLayer2.render_polyline(group_2_path_global.duplicate())
 	
 	%Group1Line2D.points = PackedVector2Array(group_1_path_global)
@@ -166,9 +168,10 @@ func coords_map_to_global(list : Array[Vector2i]) -> Array[Vector2]:
 	coords_local.assign(list.map(terrain_tilemap.map_to_local))
 	#--- Or we could stop using stupid "functional" programming and do it the supportable way.
 	var coords_global : Array[Vector2] = []
-	for coord_local in coords_local:
-		var coord_global = to_global(coord_local)
-		coords_global.push_back(coord_global)
+	#for coord_local in coords_local:
+		#var coord_global = to_global(coord_local)
+		#coords_global.push_back(coord_global)
+	coords_global.assign(coords_local.map(to_global))
 	return coords_global
 
 func coordinate_global_to_map(coordinate_global : Vector2i) -> Vector2i:
