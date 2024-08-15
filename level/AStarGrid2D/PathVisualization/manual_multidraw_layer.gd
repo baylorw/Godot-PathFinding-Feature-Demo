@@ -29,9 +29,9 @@ func render_polyline(polyline):
 	should_draw_path = true
 	queue_redraw()
 
-func show_step_number(path : Array[Vector2]):
+func show_step_number(should: bool, path : Array[Vector2]):
 	self.polyline = path
-	should_draw_step_numbers = true
+	should_draw_step_numbers = should
 	queue_redraw()
 	
 func _draw():

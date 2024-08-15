@@ -62,7 +62,6 @@ safe_margin = 1.0
 max_speed = 400.0
 endpoint_slow_radius = 50.0
 midpoint_slow_radius = 5.0
-close_enough = 10.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

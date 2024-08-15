@@ -16,8 +16,13 @@ var current_slow_radius := midpoint_slow_radius
 var path : Array[Vector2]
 var desired_position : Vector2
 var is_seeking := false
+var did_path_just_change := false
 
 func follow(new_path : Array[Vector2]):
+	#--- Will this make the repathing any less jerky?
+	#self.velocity = Vector2.ZERO
+	did_path_just_change = true
+	
 	self.path = new_path
 	
 	#--- Not sure why this happens but it happens at random if you try to set a new path
@@ -27,14 +32,14 @@ func follow(new_path : Array[Vector2]):
 		return
 		
 	# TODO: Reverse the path so can pop from back, which is a lot faster.
-	desired_position = path.pop_front()
+	#desired_position = path.pop_front()
 	is_seeking = true
 
 func _physics_process(_delta):
 	if !is_seeking:
 		return
 
-	if global_position.distance_to(desired_position) < close_enough:
+	if did_path_just_change or (global_position.distance_to(desired_position) < close_enough):
 		if path.is_empty():
 			is_seeking = false
 		else:
@@ -46,6 +51,9 @@ func _physics_process(_delta):
 			else:
 				current_slow_radius = midpoint_slow_radius
 
+	if did_path_just_change:
+		did_path_just_change = false
+		
 	if !is_seeking:
 		return
 	

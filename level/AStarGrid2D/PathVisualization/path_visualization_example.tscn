@@ -1,0 +1,466 @@
+[gd_scene load_steps=20 format=4 uid="uid://cdvty0r1m4q5a"]
+
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/path_visualization_example.gd" id="1_fsn6a"]
+[ext_resource type="Texture2D" uid="uid://bwe08ankuh0vs" path="res://asset/main_menu_background.jpg" id="2_38goe"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/camera_2d.gd" id="2_ml2mi"]
+[ext_resource type="TileSet" uid="uid://hpa7s01mxw5t" path="res://level/AStarGrid2D/PathVisualization/school_tileset.tres" id="3_qv0ig"]
+[ext_resource type="PackedScene" uid="uid://bvpqeqrft7ixh" path="res://scene/path_line/path_line.tscn" id="5_b6ltr"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/annotations_tile_map.gd" id="5_sbh6p"]
+[ext_resource type="PackedScene" uid="uid://doi7efayw5psr" path="res://scene/path_follower/path_follower.tscn" id="6_5b5ps"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/manual_multidraw_layer.gd" id="7_iurb8"]
+[ext_resource type="Texture2D" uid="uid://cvvdle27ptaxa" path="res://asset/agent/angel 50.png" id="9_6o4dt"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/tower.gd" id="9_urp87"]
+[ext_resource type="Script" path="res://level/AStarGrid2D/PathVisualization/walls_tile_map.gd" id="9_yimxx"]
+[ext_resource type="Texture2D" uid="uid://cm7ij3tj7wqh8" path="res://asset/agent/devil 50.png" id="10_uectv"]
+[ext_resource type="Texture2D" uid="uid://bra12pd6su8vg" path="res://asset/ui/hollow frame 2.png" id="13_xkymg"]
+[ext_resource type="Texture2D" uid="uid://cgckfjfuc32i4" path="res://asset/ui/panel background.png" id="14_co2um"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7v6cv"]
+size = Vector2(50, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2q6fd"]
+size = Vector2(72, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_phoao"]
+radius = 25.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m3oiq"]
+texture = ExtResource("13_xkymg")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+draw_center = false
+
+[sub_resource type="Theme" id="Theme_h2klv"]
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_m3oiq")
+
+[node name="PathVisualizationExample" type="Node2D"]
+script = ExtResource("1_fsn6a")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(575, 320)
+ignore_rotation = false
+limit_left = -100
+limit_top = -100
+limit_right = 1400
+limit_bottom = 800
+position_smoothing_enabled = true
+editor_draw_drag_margin = true
+script = ExtResource("2_ml2mi")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(1.4425, 1.08333)
+texture = ExtResource("2_38goe")
+centered = false
+
+[node name="TileMaps" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GroundTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+modulate = Color(0.990008, 1, 0.768576, 1)
+position = Vector2(0, 2)
+tile_map_data = PackedByteArray("AAAFAAYABgAAAAAAAAAGAAYAEgAAAAAAAAAHAAYABgAAAAAAAAAIAAYAEgAAAAAAAAAFAAcAEgAAAAAAAAAGAAcABgAAAAAAAAAHAAcAEgAAAAAAAAAIAAcABgAAAAAAAAAFAAgABgAAAAAAAAAGAAgAEgAAAAAAAAAHAAgABgAAAAAAAAAIAAgAEgAAAAAAAAALAAYABgAAAAAAAAAMAAYAEgAAAAAAAAANAAYABgAAAAAAAAALAAcAEgAAAAAAAAAMAAcABgAAAAAAAAANAAcAEgAAAAAAAAALAAgABgAAAAAAAAAMAAgAEgAAAAAAAAANAAgABgAAAAAAAAAQAAQAEgAAAAAAAAARAAMAEgAAAAAAAAAQAAoAEgAAAAAAAAAAAP//BgAAAAAAAAAAAAAAEgAAAAAAAAAAAAEABgAAAAAAAAAAAAIAEgAAAAAAAAAAAAMABgAAAAAAAAAAAAQAEgAAAAAAAAAAAAUABgAAAAAAAAAAAAYAEgAAAAAAAAAAAAcABgAAAAAAAAAAAAgAEgAAAAAAAAAAAAkABgAAAAAAAAAAAAoAEgAAAAAAAAAAAAsABgAAAAAAAAAAAAwAEgAAAAAAAAAAAA0ABgAAAAAAAAABAP//EgAAAAAAAAABAAAABgAAAAAAAAABAAEAEgAAAAAAAAABAAIABgAAAAAAAAABAAMAEgAAAAAAAAABAAQABgAAAAAAAAABAAUAEgAAAAAAAAABAAYABgAAAAAAAAABAAcAEgAAAAAAAAABAAgABgAAAAAAAAABAAkAEgAAAAAAAAABAAoABgAAAAAAAAABAAsAEgAAAAAAAAABAAwABgAAAAAAAAABAA0ABgAAAAAAAAACAP//BgAAAAAAAAACAAAAEgAAAAAAAAACAAEABgAAAAAAAAACAAIAEgAAAAAAAAACAAMABgAAAAAAAAACAAQAEgAAAAAAAAACAAUABgAAAAAAAAACAAYAEgAAAAAAAAACAAcABgAAAAAAAAACAAgAEgAAAAAAAAACAAkABgAAAAAAAAACAAoAEgAAAAAAAAACAAsABgAAAAAAAAACAAwAEgAAAAAAAAACAA0ABgAAAAAAAAADAP//EgAAAAAAAAADAAAABgAAAAAAAAADAAEAEgAAAAAAAAADAAIABgAAAAAAAAADAAMAEgAAAAAAAAADAAQABgAAAAAAAAADAAUAEgAAAAAAAAADAAYABgAAAAAAAAADAAcAEgAAAAAAAAADAAgABgAAAAAAAAADAAkAEgAAAAAAAAADAAoABgAAAAAAAAADAAsAEgAAAAAAAAADAAwABgAAAAAAAAADAA0ABgAAAAAAAAAEAP//BgAAAAAAAAAEAAAAEgAAAAAAAAAEAAEABgAAAAAAAAAEAAIAEgAAAAAAAAAEAAMABgAAAAAAAAAEAAQAEgAAAAAAAAAEAAUABgAAAAAAAAAEAAYAEgAAAAAAAAAEAAcABgAAAAAAAAAEAAgAEgAAAAAAAAAEAAkABgAAAAAAAAAEAAoAEgAAAAAAAAAEAAsABgAAAAAAAAAEAAwAEgAAAAAAAAAEAA0ABgAAAAAAAAAFAP//EgAAAAAAAAAFAAAABgAAAAAAAAAFAAEAEgAAAAAAAAAFAAIABgAAAAAAAAAFAAMAEgAAAAAAAAAFAAQABgAAAAAAAAAFAAUAEgAAAAAAAAAFAAkAEgAAAAAAAAAFAAoABgAAAAAAAAAFAAsAEgAAAAAAAAAFAAwABgAAAAAAAAAFAA0ABgAAAAAAAAAGAP//BgAAAAAAAAAGAAAAEgAAAAAAAAAGAAEABgAAAAAAAAAGAAIAEgAAAAAAAAAGAAMABgAAAAAAAAAGAAQAEgAAAAAAAAAGAAUABgAAAAAAAAAGAAkABgAAAAAAAAAGAAoAEgAAAAAAAAAGAAsABgAAAAAAAAAGAAwAEgAAAAAAAAAGAA0ABgAAAAAAAAAHAP//EgAAAAAAAAAHAAAABgAAAAAAAAAHAAEAEgAAAAAAAAAHAAIABgAAAAAAAAAHAAMAEgAAAAAAAAAHAAQABgAAAAAAAAAHAAUAEgAAAAAAAAAHAAkAEgAAAAAAAAAHAAoABgAAAAAAAAAHAAsAEgAAAAAAAAAHAAwABgAAAAAAAAAHAA0ABgAAAAAAAAAIAP//BgAAAAAAAAAIAAAAEgAAAAAAAAAIAAEABgAAAAAAAAAIAAIAEgAAAAAAAAAIAAMABgAAAAAAAAAIAAQAEgAAAAAAAAAIAAUABgAAAAAAAAAIAAkABgAAAAAAAAAIAAoAEgAAAAAAAAAIAAsABgAAAAAAAAAIAAwAEgAAAAAAAAAIAA0ABgAAAAAAAAAJAP//EgAAAAAAAAAJAAAABgAAAAAAAAAJAAEAEgAAAAAAAAAJAAIABgAAAAAAAAAJAAMAEgAAAAAAAAAJAAQABgAAAAAAAAAJAAYABgAAAAAAAAAJAAcAEgAAAAAAAAAJAAgABgAAAAAAAAAJAAkAEgAAAAAAAAAJAAoABgAAAAAAAAAJAAsAEgAAAAAAAAAJAAwABgAAAAAAAAAJAA0ABgAAAAAAAAAKAP//BgAAAAAAAAAKAAAAEgAAAAAAAAAKAAEABgAAAAAAAAAKAAIAEgAAAAAAAAAKAAMABgAAAAAAAAAKAAQAEgAAAAAAAAAKAAUABgAAAAAAAAAKAAYAEgAAAAAAAAAKAAcABgAAAAAAAAAKAAgAEgAAAAAAAAAKAAkABgAAAAAAAAAKAAoAEgAAAAAAAAAKAAsABgAAAAAAAAAKAAwAEgAAAAAAAAAKAA0ABgAAAAAAAAALAP//EgAAAAAAAAALAAAABgAAAAAAAAALAAEAEgAAAAAAAAALAAIABgAAAAAAAAALAAMAEgAAAAAAAAALAAQABgAAAAAAAAALAAUAEgAAAAAAAAALAAkAEgAAAAAAAAALAAoABgAAAAAAAAALAAsAEgAAAAAAAAALAAwABgAAAAAAAAALAA0ABgAAAAAAAAAMAP//BgAAAAAAAAAMAAAAEgAAAAAAAAAMAAEABgAAAAAAAAAMAAIAEgAAAAAAAAAMAAMABgAAAAAAAAAMAAQAEgAAAAAAAAAMAAUABgAAAAAAAAAMAAkABgAAAAAAAAAMAAoAEgAAAAAAAAAMAAsABgAAAAAAAAAMAAwAEgAAAAAAAAANAP//EgAAAAAAAAANAAAABgAAAAAAAAANAAEAEgAAAAAAAAANAAIABgAAAAAAAAANAAMAEgAAAAAAAAANAAQABgAAAAAAAAANAAUAEgAAAAAAAAANAAkAEgAAAAAAAAANAAoABgAAAAAAAAANAAsAEgAAAAAAAAANAAwABgAAAAAAAAANAA0ABgAAAAAAAAAOAP//BgAAAAAAAAAOAAAAEgAAAAAAAAAOAAEABgAAAAAAAAAOAAIAEgAAAAAAAAAOAAMABgAAAAAAAAAOAAQAEgAAAAAAAAAOAAUABgAAAAAAAAAOAAYAEgAAAAAAAAAOAAcABgAAAAAAAAAOAAgAEgAAAAAAAAAOAAkABgAAAAAAAAAOAAoAEgAAAAAAAAAOAAsABgAAAAAAAAAOAAwAEgAAAAAAAAAOAA0ABgAAAAAAAAAPAP//EgAAAAAAAAAPAAAABgAAAAAAAAAPAAEAEgAAAAAAAAAPAAIABgAAAAAAAAAPAAMAEgAAAAAAAAAPAAQABgAAAAAAAAAPAAUAEgAAAAAAAAAPAAYABgAAAAAAAAAPAAcAEgAAAAAAAAAPAAgABgAAAAAAAAAPAAkAEgAAAAAAAAAPAAoABgAAAAAAAAAPAAsAEgAAAAAAAAAPAAwABgAAAAAAAAAPAA0ABgAAAAAAAAAQAP//BgAAAAAAAAAQAAAAEgAAAAAAAAAQAAEABgAAAAAAAAAQAAIAEgAAAAAAAAAQAAMABgAAAAAAAAAQAAUABgAAAAAAAAAQAAYAEgAAAAAAAAAQAAcABgAAAAAAAAAQAAkABgAAAAAAAAAQAAsABgAAAAAAAAAQAAwAEgAAAAAAAAAQAA0ABgAAAAAAAAARAP//EgAAAAAAAAARAAAABgAAAAAAAAARAAEAEgAAAAAAAAARAAIABgAAAAAAAAARAAQABgAAAAAAAAARAAUAEgAAAAAAAAARAAYABgAAAAAAAAARAAcAEgAAAAAAAAARAAgABgAAAAAAAAARAAkAEgAAAAAAAAARAAoABgAAAAAAAAARAAsAEgAAAAAAAAARAAwABgAAAAAAAAARAA0ABgAAAAAAAAD/////EgAAAAAAAAD//wAABgAAAAAAAAD//wEAEgAAAAAAAAD//wIABgAAAAAAAAD//wMAEgAAAAAAAAD//wQABgAAAAAAAAD//wUAEgAAAAAAAAD//wYABgAAAAAAAAD//wcAEgAAAAAAAAD//wgABgAAAAAAAAD//wkAEgAAAAAAAAD//woABgAAAAAAAAD//wsAEgAAAAAAAAD//wwABgAAAAAAAAD//w0ABgAAAAAAAAAMAA0ABgAAAAAAAAAJAAUAEgAAAAAAAAAQAAgAEgAAAAAAAAASAP//BQAAAAAAAAATAP//BQAAAAAAAAAUAP//BQAAAAAAAAAVAP//BQAAAAAAAAAWAP//BQAAAAAAAAAXAP//BQAAAAAAAAASAA0ABQAAAAAAAAATAA0ABQAAAAAAAAAUAA0ABQAAAAAAAAAVAA0ABQAAAAAAAAAWAA0ABQAAAAAAAAAXAA0ABQAAAAAAAAAXAAAABQAAAAAAAAAXAAEABQAAAAAAAAAXAAIABQAAAAAAAAAXAAMABQAAAAAAAAAXAAQABQAAAAAAAAAXAAUABQAAAAAAAAAXAAYABQAAAAAAAAAXAAcABQAAAAAAAAAXAAgABQAAAAAAAAAXAAkABQAAAAAAAAAXAAoABQAAAAAAAAAXAAsABQAAAAAAAAAXAAwABQAAAAAAAAA=")
+tile_set = ExtResource("3_qv0ig")
+
+[node name="ShadeTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+modulate = Color(0.618074, 0.743973, 1, 1)
+position = Vector2(0, 2)
+tile_set = ExtResource("3_qv0ig")
+script = ExtResource("5_sbh6p")
+covered_not_path_color = Color(1, 1, 0, 1)
+
+[node name="TileBordersTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+modulate = Color(0.618074, 0.743973, 1, 1)
+position = Vector2(0, 2)
+tile_set = ExtResource("3_qv0ig")
+script = ExtResource("5_sbh6p")
+covered_not_path_color = Color(0, 1, 0, 1)
+
+[node name="PathTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+modulate = Color(0.618074, 0.743973, 1, 1)
+position = Vector2(0, 2)
+tile_set = ExtResource("3_qv0ig")
+script = ExtResource("5_sbh6p")
+
+[node name="AnnotationsTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+modulate = Color(0.618074, 0.743973, 1, 1)
+position = Vector2(0, 2)
+tile_set = ExtResource("3_qv0ig")
+script = ExtResource("5_sbh6p")
+
+[node name="WallsTileMap" type="TileMapLayer" parent="TileMaps"]
+unique_name_in_owner = true
+position = Vector2(0, 2)
+tile_map_data = PackedByteArray("AAAAAP//BQAAAAAAAAAAAAAABQAAAAAAAAAAAAEABQAAAAAAAAAAAAIABQAAAAAAAAAAAAMABQAAAAAAAAAAAAQABQAAAAAAAAAAAAUABQAAAAAAAAAAAAYABQAAAAAAAAAAAAcABQAAAAAAAAAAAAgABQAAAAAAAAAAAAkABQAAAAAAAAAAAAoABQAAAAAAAAAAAAsABQAAAAAAAAAAAAwABQAAAAAAAAAAAA0ABQAAAAAAAAABAAwABQAAAAAAAAABAA0ABQAAAAAAAAACAP//BQAAAAAAAAACAAAABQAAAAAAAAACAAwABQAAAAAAAAACAA0ABQAAAAAAAAADAP//BQAAAAAAAAADAAAABQAAAAAAAAADAAwABQAAAAAAAAADAA0ABQAAAAAAAAAEAP//BQAAAAAAAAAEAAAABQAAAAAAAAAEAAwABQAAAAAAAAAEAA0ABQAAAAAAAAAFAP//BQAAAAAAAAAFAAAABQAAAAAAAAAFAAwABQAAAAAAAAAFAA0ABQAAAAAAAAAGAP//BQAAAAAAAAAGAAAABQAAAAAAAAAGAAwABQAAAAAAAAAGAA0ABQAAAAAAAAAHAP//BQAAAAAAAAAHAAAABQAAAAAAAAAHAAwABQAAAAAAAAAHAA0ABQAAAAAAAAAIAP//BQAAAAAAAAAIAAAABQAAAAAAAAAIAAwABQAAAAAAAAAIAA0ABQAAAAAAAAAJAP//BQAAAAAAAAAJAAAABQAAAAAAAAAJAAwABQAAAAAAAAAJAA0ABQAAAAAAAAAKAP//BQAAAAAAAAAKAAAABQAAAAAAAAAKAAwABQAAAAAAAAAKAA0ABQAAAAAAAAALAP//BQAAAAAAAAALAAAABQAAAAAAAAALAAwABQAAAAAAAAALAA0ABQAAAAAAAAAMAP//BQAAAAAAAAAMAAAABQAAAAAAAAANAP//BQAAAAAAAAANAAAABQAAAAAAAAANAAwABQAAAAAAAAANAA0ABQAAAAAAAAAOAP//BQAAAAAAAAAOAAAABQAAAAAAAAAOAAwABQAAAAAAAAAOAA0ABQAAAAAAAAAPAAwABQAAAAAAAAAPAA0ABQAAAAAAAAAQAP//BQAAAAAAAAAQAAAABQAAAAAAAAAQAAwABQAAAAAAAAAQAA0ABQAAAAAAAAD/////BQAAAAAAAAD//wAABQAAAAAAAAD//wEABQAAAAAAAAD//wIABQAAAAAAAAD//wMABQAAAAAAAAD//wQABQAAAAAAAAD//wUABQAAAAAAAAD//wYABQAAAAAAAAD//wcABQAAAAAAAAD//wgABQAAAAAAAAD//wkABQAAAAAAAAD//woABQAAAAAAAAD//wsABQAAAAAAAAD//wwABQAAAAAAAAD//w0ABQAAAAAAAAARAP//BQAAAAAAAAARAAAABQAAAAAAAAARAAEABQAAAAAAAAARAAIABQAAAAAAAAARAAMABQAAAAAAAAARAAQABQAAAAAAAAARAAUABQAAAAAAAAARAAYABQAAAAAAAAARAAcABQAAAAAAAAARAAgABQAAAAAAAAARAAkABQAAAAAAAAARAAoABQAAAAAAAAARAAsABQAAAAAAAAARAAwABQAAAAAAAAARAA0ABQAAAAAAAAAOAAkAAwAAAAAAAAAMAAQAAwAAAAAAAAAHAAkAAwAAAAAAAAADAAQAAwAAAAAAAAACAAMAAwAAAAAAAAACAAIAAwAAAAAAAAACAAEAAwAAAAAAAAADAAUAAwAAAAAAAAADAAYAAwAAAAAAAAADAAcAAwAAAAAAAAADAAgAAwAAAAAAAAADAAkAAwAAAAAAAAAFAAsAAwAAAAAAAAAHAAoAAwAAAAAAAAAGAAsAAwAAAAAAAAAHAAgAAwAAAAAAAAAHAAcAAwAAAAAAAAAGAAYAAwAAAAAAAAAFAAUAAwAAAAAAAAAEAAgAAwAAAAAAAAAFAAgAAwAAAAAAAAAFAAQAAwAAAAAAAAAFAAMAAwAAAAAAAAAJAAYAEAAAAAAAAAAJAAUAEAAAAAAAAAAJAAQAEAAAAAAAAAAJAAMAEAAAAAAAAAAJAAIAEAAAAAAAAAAJAAEAEAAAAAAAAAAMAAoAEAAAAAAAAAALAAoAEAAAAAAAAAAKAAoAEAAAAAAAAAA=")
+tile_set = ExtResource("3_qv0ig")
+script = ExtResource("9_yimxx")
+
+[node name="SpawnStuff" type="Node2D" parent="."]
+
+[node name="Group1StartMarker" type="Marker2D" parent="SpawnStuff"]
+position = Vector2(75, -47)
+
+[node name="Sprite2D" type="Sprite2D" parent="SpawnStuff/Group1StartMarker"]
+position = Vector2(0, 4)
+texture = SubResource("PlaceholderTexture2D_7v6cv")
+
+[node name="Group2StartMarker" type="Marker2D" parent="SpawnStuff"]
+position = Vector2(775, -43)
+
+[node name="Sprite2D2" type="Sprite2D" parent="SpawnStuff/Group2StartMarker"]
+texture = SubResource("PlaceholderTexture2D_7v6cv")
+
+[node name="GoalMarker" type="Marker2D" parent="SpawnStuff"]
+position = Vector2(626, 686)
+
+[node name="Sprite2D3" type="Sprite2D" parent="SpawnStuff/GoalMarker"]
+position = Vector2(-1, 13)
+texture = SubResource("PlaceholderTexture2D_7v6cv")
+
+[node name="KillZone" type="Area2D" parent="SpawnStuff"]
+position = Vector2(6, 14)
+collision_layer = 0
+collision_mask = 6
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnStuff/KillZone"]
+position = Vector2(617, 672)
+shape = SubResource("RectangleShape2D_2q6fd")
+
+[node name="ManualDrawLayer" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_iurb8")
+
+[node name="ManualDrawLayer2" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_iurb8")
+
+[node name="Paths" type="Node2D" parent="."]
+
+[node name="Group1Line2D" parent="Paths" instance=ExtResource("5_b6ltr")]
+unique_name_in_owner = true
+
+[node name="Group2Line2D" parent="Paths" instance=ExtResource("5_b6ltr")]
+unique_name_in_owner = true
+
+[node name="PathFollowerPrototype" parent="." instance=ExtResource("6_5b5ps")]
+unique_name_in_owner = true
+position = Vector2(74, -89)
+
+[node name="Creeps" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Towers" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Tower" type="CharacterBody2D" parent="Towers" groups=["towers"]]
+position = Vector2(177, 226)
+script = ExtResource("9_urp87")
+range = 1
+
+[node name="Sprite" type="Sprite2D" parent="Towers/Tower"]
+texture = ExtResource("9_6o4dt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/Tower"]
+shape = SubResource("CircleShape2D_phoao")
+
+[node name="Range" type="Area2D" parent="Towers/Tower"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower/Range"]
+polygon = PackedVector2Array(-75, -25, -75, 25, -25, 25, -25, 75, 25, 75, 25, 25, 75, 25, 75, -25, 25, -25, 25, -75, -25, -75, -25, -25, -75, -25)
+
+[node name="Tower2" type="CharacterBody2D" parent="Towers" groups=["towers"]]
+position = Vector2(373, 476)
+script = ExtResource("9_urp87")
+
+[node name="Sprite" type="Sprite2D" parent="Towers/Tower2"]
+texture = ExtResource("10_uectv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/Tower2"]
+shape = SubResource("CircleShape2D_phoao")
+
+[node name="Range" type="Area2D" parent="Towers/Tower2"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower2/Range"]
+polygon = PackedVector2Array(-75, -25, -75, 25, -75, 75, -25, 75, 25, 75, 75, 75, 75, 25, 75, -25, 75, -75, 25, -75, -25, -75, -75, -75, -75, -25)
+
+[node name="Tower3" type="CharacterBody2D" parent="Towers" groups=["towers"]]
+position = Vector2(625, 229)
+script = ExtResource("9_urp87")
+range = 3
+
+[node name="Sprite" type="Sprite2D" parent="Towers/Tower3"]
+texture = ExtResource("9_6o4dt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/Tower3"]
+shape = SubResource("CircleShape2D_phoao")
+
+[node name="Range" type="Area2D" parent="Towers/Tower3"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower3/Range"]
+polygon = PackedVector2Array(-125, -25, -75, -25, -75, -75, -25, -75, -25, -125, 25, -125, 25, -75, 75, -75, 75, -25, 125, -25, 125, 25, 75, 25, 75, 75, 25, 75, 25, 125, -25, 125, -25, 75, -75, 75, -75, 25, -125, 25)
+
+[node name="Tower3_2" type="CharacterBody2D" parent="Towers" groups=["towers"]]
+position = Vector2(725, 477)
+script = ExtResource("9_urp87")
+range = 3
+
+[node name="Sprite" type="Sprite2D" parent="Towers/Tower3_2"]
+texture = ExtResource("9_6o4dt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/Tower3_2"]
+shape = SubResource("CircleShape2D_phoao")
+
+[node name="Range" type="Area2D" parent="Towers/Tower3_2"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower3_2/Range"]
+polygon = PackedVector2Array(-125, -25, -75, -25, -75, -75, -25, -75, -25, -125, 25, -125, 25, -75, 75, -75, 75, -25, 125, -25, 125, 25, 75, 25, 75, 75, 25, 75, 25, 125, -25, 125, -25, 75, -75, 75, -75, 25, -125, 25)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DisplayOptionsPanel" type="PanelContainer" parent="UI"]
+offset_left = 902.0
+offset_top = 1.0
+offset_right = 1151.0
+offset_bottom = 415.0
+theme = SubResource("Theme_h2klv")
+
+[node name="TextureRect" type="TextureRect" parent="UI/DisplayOptionsPanel"]
+layout_mode = 2
+texture = ExtResource("14_co2um")
+expand_mode = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="UI/DisplayOptionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="GridContainer" type="GridContainer" parent="UI/DisplayOptionsPanel/MarginContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="PathRTL" type="RichTextLabel" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=purple][b][u]Path
+[/u][/b][/color]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Control3" type="Control" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Arrow"
+
+[node name="ShowPathArrowsCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Arrow (dim)"
+
+[node name="ShowDimPathArrowsCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Animated"
+
+[node name="ShowAnimatedPathCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Step Number"
+
+[node name="ShowPathStepCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="BorderRTL" type="RichTextLabel" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=purple][b][u]Tile Border
+[/u][/b][/color]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Control2" type="Control" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Path Covered"
+
+[node name="ShowTileBorderForCoveredPathCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Path Uncovered"
+
+[node name="ShowTileBorderForUncoveredPathCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label14" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Range"
+
+[node name="ShowTileBorderForRangeCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Border Size
+"
+
+[node name="BorderSizeDDLB" type="OptionButton" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 2
+item_count = 4
+popup/item_0/text = "3"
+popup/item_0/id = 3
+popup/item_1/text = "5"
+popup/item_1/id = 5
+popup/item_2/text = "8"
+popup/item_2/id = 8
+popup/item_3/text = "10"
+popup/item_3/id = 10
+
+[node name="BorderRTL2" type="RichTextLabel" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=purple][b][u]Shade
+[/u][/b][/color]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Control6" type="Control" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Path
+"
+
+[node name="ShowShadePathCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label12" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Range
+"
+
+[node name="ShowShadeRangeCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label13" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Dim
+"
+
+[node name="ShowShadeRangeCheckBox2" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="MarkersRTL" type="RichTextLabel" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=purple][b][u]Tile Markers
+[/u][/b][/color]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Control4" type="Control" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Range Path
+"
+
+[node name="ShowMarkerForCoveredPathCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Range Not Path"
+
+[node name="ShowMarkerForNotPathCoveredCheckBox" type="CheckBox" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="spacer" type="Label" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="Control5" type="Control" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+
+[node name="StartWaveButton" type="Button" parent="UI/DisplayOptionsPanel/MarginContainer3/GridContainer"]
+layout_mode = 2
+text = "Start Wave"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 240.0
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="UI/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+text = "Left to create. Right to delete."
+
+[connection signal="body_entered" from="SpawnStuff/KillZone" to="." method="_on_kill_zone_body_entered"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowPathArrowsCheckBox" to="." method="_on_show_path_arrows_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowDimPathArrowsCheckBox" to="." method="_on_show_dim_path_arrows_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowAnimatedPathCheckBox" to="." method="_on_show_animated_path_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowPathStepCheckBox" to="." method="_on_show_path_step_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowTileBorderForCoveredPathCheckBox" to="." method="_on_show_tile_border_for_covered_path_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowTileBorderForUncoveredPathCheckBox" to="." method="_on_show_tile_border_for_uncovered_path_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowTileBorderForRangeCheckBox" to="." method="_on_show_tile_border_for_range_check_box_toggled"]
+[connection signal="item_selected" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/BorderSizeDDLB" to="." method="_on_border_size_ddlb_item_selected"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowShadePathCheckBox" to="." method="_on_show_shade_path_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowShadeRangeCheckBox" to="." method="_on_show_shade_range_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowShadeRangeCheckBox2" to="." method="_on_show_shade_range_check_box_2_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowMarkerForCoveredPathCheckBox" to="." method="_on_show_marker_for_covered_path_check_box_toggled"]
+[connection signal="toggled" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/ShowMarkerForNotPathCoveredCheckBox" to="." method="_on_show_marker_for_not_path_covered_check_box_toggled"]
+[connection signal="pressed" from="UI/DisplayOptionsPanel/MarginContainer3/GridContainer/StartWaveButton" to="." method="_on_start_wave_button_pressed"]
