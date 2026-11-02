@@ -150,13 +150,11 @@ func show_dim_colors(should_dim_shade: bool):
 		uncovered_path_color.a   = 1
 
 func show_path_colors():
-	print("gonna color the paths")
 	show_path_colors_for_path(path_1)
 	show_path_colors_for_path(path_2)
 
 func show_path_colors_for_path(path: Array[Vector2i]):
 	for coord in path:
-		print("coloring " + str(coord))
 		set_cell(coord, white_tile_source_id, Vector2i(0, 0))
 
 func show_range_colors():

@@ -21,3 +21,6 @@ func _on_a_star_grid_runtime_mod_example_pressed() -> void:
 
 func _on_mazing_td_example_pressed() -> void:
 	get_tree().change_scene_to_file("res://level/AStarGrid2D/MazingTD/mazing_td_a_star_grid_2d.tscn")
+
+func _on_visualization_example_pressed() -> void:
+	get_tree().change_scene_to_file("res://level/AStarGrid2D/PathVisualization/path_visualization_example.tscn")

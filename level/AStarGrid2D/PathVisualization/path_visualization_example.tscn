@@ -40,6 +40,7 @@ script = ExtResource("1_fsn6a")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(575, 320)
 ignore_rotation = false
 limit_left = -100
@@ -169,7 +170,7 @@ offset_bottom = 40.0
 [node name="Tower" type="CharacterBody2D" parent="Towers" groups=["towers"]]
 position = Vector2(177, 226)
 script = ExtResource("9_urp87")
-range = 1
+range = 3
 
 [node name="Sprite" type="Sprite2D" parent="Towers/Tower"]
 texture = ExtResource("9_6o4dt")
@@ -185,6 +186,7 @@ polygon = PackedVector2Array(-75, -25, -75, 25, -25, 25, -25, 75, 25, 75, 25, 25
 [node name="Tower2" type="CharacterBody2D" parent="Towers" groups=["towers"]]
 position = Vector2(373, 476)
 script = ExtResource("9_urp87")
+range = 0
 
 [node name="Sprite" type="Sprite2D" parent="Towers/Tower2"]
 texture = ExtResource("10_uectv")
@@ -200,7 +202,7 @@ polygon = PackedVector2Array(-75, -25, -75, 25, -75, 75, -25, 75, 25, 75, 75, 75
 [node name="Tower3" type="CharacterBody2D" parent="Towers" groups=["towers"]]
 position = Vector2(625, 229)
 script = ExtResource("9_urp87")
-range = 3
+range = 4
 
 [node name="Sprite" type="Sprite2D" parent="Towers/Tower3"]
 texture = ExtResource("9_6o4dt")
@@ -216,7 +218,7 @@ polygon = PackedVector2Array(-125, -25, -75, -25, -75, -75, -25, -75, -25, -125,
 [node name="Tower3_2" type="CharacterBody2D" parent="Towers" groups=["towers"]]
 position = Vector2(725, 477)
 script = ExtResource("9_urp87")
-range = 3
+range = 0
 
 [node name="Sprite" type="Sprite2D" parent="Towers/Tower3_2"]
 texture = ExtResource("9_6o4dt")
@@ -227,6 +229,22 @@ shape = SubResource("CircleShape2D_phoao")
 [node name="Range" type="Area2D" parent="Towers/Tower3_2"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower3_2/Range"]
+polygon = PackedVector2Array(-125, -25, -75, -25, -75, -75, -25, -75, -25, -125, 25, -125, 25, -75, 75, -75, 75, -25, 125, -25, 125, 25, 75, 25, 75, 75, 25, 75, 25, 125, -25, 125, -25, 75, -75, 75, -75, 25, -125, 25)
+
+[node name="Tower4" type="CharacterBody2D" parent="Towers" groups=["towers"]]
+position = Vector2(375, 25)
+script = ExtResource("9_urp87")
+range = 0
+
+[node name="Sprite" type="Sprite2D" parent="Towers/Tower4"]
+texture = ExtResource("9_6o4dt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/Tower4"]
+shape = SubResource("CircleShape2D_phoao")
+
+[node name="Range" type="Area2D" parent="Towers/Tower4"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Towers/Tower4/Range"]
 polygon = PackedVector2Array(-125, -25, -75, -25, -75, -75, -25, -75, -25, -125, 25, -125, 25, -75, 75, -75, 75, -25, 125, -25, 125, 25, 75, 25, 75, 75, 25, 75, 25, 125, -25, 125, -25, 75, -75, 75, -75, 25, -125, 25)
 
 [node name="UI" type="CanvasLayer" parent="."]
